@@ -30,13 +30,13 @@ class Ui_MainWindow(object):
         self.answer_label.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
         self.answer_label.setObjectName("answer_label")
         
-        self.trp_area = QtWidgets.QPushButton(self.centralwidget)
-        self.trp_area.setGeometry(QtCore.QRect(20, 330, 131, 61))
+        self.calculate_area = QtWidgets.QPushButton(self.centralwidget)
+        self.calculate_area.setGeometry(QtCore.QRect(30, 330, 420, 61))
         font = QtGui.QFont()
         font.setPointSize(12)
-        self.trp_area.setFont(font)
-        self.trp_area.setStyleSheet("border-color: rgb(186, 186, 186);")
-        self.trp_area.setObjectName("trp_area")
+        self.calculate_area.setFont(font)
+        self.calculate_area.setStyleSheet("border-color: rgb(186, 186, 186);")
+        self.calculate_area.setObjectName("calculate_area")
         
         self.message_box = QtWidgets.QPushButton(self.centralwidget)
         self.message_box.setGeometry(QtCore.QRect(250, 400, 181, 61))
@@ -53,22 +53,6 @@ class Ui_MainWindow(object):
         self.close.setFont(font)
         self.close.setStyleSheet("border-color: rgb(186, 186, 186);")
         self.close.setObjectName("close")
-        
-        self.mrt_area = QtWidgets.QPushButton(self.centralwidget)
-        self.mrt_area.setGeometry(QtCore.QRect(160, 330, 161, 61))
-        font = QtGui.QFont()
-        font.setPointSize(12)
-        self.mrt_area.setFont(font)
-        self.mrt_area.setStyleSheet("border-color: rgb(186, 186, 186);")
-        self.mrt_area.setObjectName("mrt_area")
-        
-        self.kvt_area = QtWidgets.QPushButton(self.centralwidget)
-        self.kvt_area.setGeometry(QtCore.QRect(330, 330, 131, 61))
-        font = QtGui.QFont()
-        font.setPointSize(12)
-        self.kvt_area.setFont(font)
-        self.kvt_area.setStyleSheet("border-color: rgb(186, 186, 186);")
-        self.kvt_area.setObjectName("kvt_area")
         
         self.clear_button = QtWidgets.QPushButton(self.centralwidget)
         self.clear_button.setGeometry(QtCore.QRect(50, 400, 181, 61))
@@ -112,32 +96,35 @@ class Ui_MainWindow(object):
         self.Kvadrati.triggered.connect(lambda: self.show_square())
 
         # call button functions:
-        self.trp_area.clicked.connect(self.T)
-        self.mrt_area.clicked.connect(self.M)
-        self.kvt_area.clicked.connect(self.K)
+        self.calculate_area.clicked.connect(self.Figure_Area)
         self.clear_button.clicked.connect(self.Remove)
         self.close.clicked.connect(MainWindow.close)
         
     # define show_figures function:
     def show_trapezoid(self):
         self.picture_label.setPixmap(QtGui.QPixmap("trapecia.jpg"))
+        self.answer_label.setText(f'Area of Trapezoid:')
     def show_rectangle(self):
         self.picture_label.setPixmap(QtGui.QPixmap("martkutxedi.jpg"))
+        self.answer_label.setText(f'Area of Rectangle:')
     def show_square(self):
         self.picture_label.setPixmap(QtGui.QPixmap("kvadrati.jpg"))
+        self.answer_label.setText(f'Area of Square:')
     
     # choose which figures area should be shown:
-    def T(self):
-        trp_1 = Trapecia(Digit_list[0])
-        self.answer_label.setText(f'Area Of Trapezoid: {trp_1.t_fartobi()} m\u00b2')
-
-    def M(self):   
-        mrt_1 = Martkutxedi(Digit_list[0])
-        self.answer_label.setText(f'Area Of Rectangle: {mrt_1.m_fartobi()} m\u00b2')
-        
-    def K(self):
-        kvt_1 = Kvadrati(Digit_list[0])
-        self.answer_label.setText(f'Area Of Square: {kvt_1.k_fartobi()} m\u00b2')
+    def Figure_Area(self):
+        #menu_text = self.menuChoose_Figure
+        screen = self.answer_label.text()
+        if "Trapezoid" in screen:
+            trp_1 = Trapecia(Digit_list[0])
+            self.answer_label.setText(f'{screen} {trp_1.t_fartobi()} m\u00b2')
+        elif "Rectangle" in screen:
+            mrt_1 = Martkutxedi(Digit_list[0])
+            self.answer_label.setText(f'{screen} {mrt_1.m_fartobi()} m\u00b2')
+        elif "Square" in screen:
+            kvt_1 = Kvadrati(Digit_list[0])
+            self.answer_label.setText(f'{screen} {kvt_1.k_fartobi()} m\u00b2')
+# ------------------------------------------------------------------------------------------------ #
     
     # define function for Clear Button:
     def Remove(self):
@@ -167,11 +154,9 @@ class Ui_MainWindow(object):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
         self.answer_label.setText(_translate("MainWindow", "0"))
-        self.trp_area.setText(_translate("MainWindow", "Trapezoid"))
+        self.calculate_area.setText(_translate("MainWindow", "Calculate Area"))
         self.message_box.setText(_translate("MainWindow", "Message Box"))
         self.close.setText(_translate("MainWindow", "CLOSE APP"))
-        self.mrt_area.setText(_translate("MainWindow", "Rectangle"))
-        self.kvt_area.setText(_translate("MainWindow", "Square"))
         self.clear_button.setText(_translate("MainWindow", "Clear"))
         self.menuChoose_Figure.setTitle(_translate("MainWindow", "Choose Figure"))
         self.Trapecia.setText(_translate("MainWindow", "Trapecia"))
@@ -226,3 +211,4 @@ if __name__ == "__main__":
     ui.setupUi(MainWindow)
     MainWindow.show()
     sys.exit(app.exec_())
+
