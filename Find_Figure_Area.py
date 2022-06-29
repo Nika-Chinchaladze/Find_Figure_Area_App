@@ -103,27 +103,26 @@ class Ui_MainWindow(object):
     # define show_figures function:
     def show_trapezoid(self):
         self.picture_label.setPixmap(QtGui.QPixmap("trapecia.jpg"))
-        self.answer_label.setText(f'Area of Trapezoid:')
+        self.answer_label.setText(f'Trapezoid')
     def show_rectangle(self):
         self.picture_label.setPixmap(QtGui.QPixmap("martkutxedi.jpg"))
-        self.answer_label.setText(f'Area of Rectangle:')
+        self.answer_label.setText(f'Rectangle')
     def show_square(self):
         self.picture_label.setPixmap(QtGui.QPixmap("kvadrati.jpg"))
-        self.answer_label.setText(f'Area of Square:')
+        self.answer_label.setText(f'Square')
     
     # choose which figures area should be shown:
     def Figure_Area(self):
-        #menu_text = self.menuChoose_Figure
         screen = self.answer_label.text()
         if "Trapezoid" in screen:
             trp_1 = Trapecia(Digit_list[0])
-            self.answer_label.setText(f'{screen} {trp_1.t_fartobi()} m\u00b2')
+            self.answer_label.setText(f'Area of Trapezoid: {trp_1.t_fartobi()} m\u00b2')
         elif "Rectangle" in screen:
             mrt_1 = Martkutxedi(Digit_list[0])
-            self.answer_label.setText(f'{screen} {mrt_1.m_fartobi()} m\u00b2')
+            self.answer_label.setText(f'Area of Rectangle: {mrt_1.m_fartobi()} m\u00b2')
         elif "Square" in screen:
             kvt_1 = Kvadrati(Digit_list[0])
-            self.answer_label.setText(f'{screen} {kvt_1.k_fartobi()} m\u00b2')
+            self.answer_label.setText(f'Area of Square: {kvt_1.k_fartobi()} m\u00b2')
 # ------------------------------------------------------------------------------------------------ #
     
     # define function for Clear Button:
@@ -132,7 +131,7 @@ class Ui_MainWindow(object):
         self.picture_label.setPixmap(QtGui.QPixmap(""))
     
     # define function for message box button:
-    def show_popup(self):
+    def show_popup(self, i):
         msg = QMessageBox()
         msg.setWindowTitle("Hello, World")
         msg.setText("Welcome To Main Window!")
@@ -140,13 +139,18 @@ class Ui_MainWindow(object):
         msg.setStandardButtons(QMessageBox.Cancel|QMessageBox.Retry|QMessageBox.Ignore)
         msg.setDefaultButton(QMessageBox.Retry)
         msg.setInformativeText("Informative Text!")
-        msg.setDetailedText("By Order Of The Peacky Blinders!")
 
-        msg.buttonClicked.connect(self.popup_button)
+        screen = self.answer_label.text()
+        sides = str(Trapecia(Digit_list[0]))
+        side = sides.split(',')
+        if "Trapezoid" in screen:
+            msg.setDetailedText(f'Fudze_1 ={side[0]} \nFudze_2 ={side[1]}  \nHeight ={side[2]} ')
+        elif "Rectangle" in screen:
+            msg.setDetailedText(f'Gverdi_1 ={side[0]} \nGverdi_2 ={side[1]} ')
+        elif "Square" in screen:
+            msg.setDetailedText(f'Gverdi ={side[0]}')
+
         x = msg.exec_()
-
-    def popup_button(self, i):
-        print(i.text())
         
 # ----------------------------------------------------------------------------------------------------------------- #
 
@@ -211,4 +215,3 @@ if __name__ == "__main__":
     ui.setupUi(MainWindow)
     MainWindow.show()
     sys.exit(app.exec_())
-
